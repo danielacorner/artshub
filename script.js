@@ -4,6 +4,9 @@ const square = document.querySelector(".square")
 const circle = document.querySelector(".circle")
 const roundedSquare = document.querySelector(".rounded-square")
 const triangle = document.querySelector(".triangle")
+const star = document.querySelector(".star")
+
+const debugPanel = document.querySelector(".debug-panel")
 
 // now let's create a function that will animate our shapes
 function animationLoop() {
@@ -16,19 +19,33 @@ function animationLoop() {
   const speed = 10
   const degrees = (seconds * speed) % 360
 
+  const sinWaveGoesUpAndDown = Math.sin(seconds)
+
   const goesTo100 = 100 * (seconds % 1)
+
+  // show these values in the debug panel
+  debugPanel.innerHTML = `
+    <p>seconds: ${seconds}</p>
+    <p>degrees: ${degrees}</p>
+    <p>speed: ${speed}</p>
+    <p>sinWaveGoesUpAndDown: ${sinWaveGoesUpAndDown}</p>
+    <p>goesTo100: ${goesTo100}</p>
+  `
 
   // rotate the square
   square.style.transform = `rotate(${degrees}deg)`
 
   // scale the circle
-  circle.style.transform = `scale(${seconds % 1})`
+  circle.style.transform = `scale(${sinWaveGoesUpAndDown})`
 
   // rotate the rounded square faster
-  roundedSquare.style.transform = `rotate(${degrees * 8}deg)`
+  roundedSquare.style.transform = `rotate(${degrees * sinWaveGoesUpAndDown * -8}deg)`
 
   // translate the circle
   triangle.style.transform = `translateX(${goesTo100}px)`
+
+  // scale the star
+  star.style.transform = `scale(${sinWaveGoesUpAndDown})`
 
   // you can use the AI to write your code:
   // try writing a comment like this in english, then you can ask an AI to help you write the JavaScript code
